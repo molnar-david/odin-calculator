@@ -72,7 +72,7 @@ function display(event) {
         if (displayInput.textContent.includes("=")) {
             op1 = displayOutput.textContent;
             op2 = "";
-            displayInput.textContent = op1 + input;
+            displayInput.textContent = op1 + " " + input + " ";
             operator = input;
             currentInput = "";
         } else if (isValidInput()) {
@@ -80,10 +80,10 @@ function display(event) {
             if (op1 && operator) { 
                 op1 = operate(op1, operator, currentInput).toString();
                 displayOutput.textContent = +op1;
-                displayInput.textContent = op1 + input;
+                displayInput.textContent = op1 + " " + input + " ";
             } else {
                 op1 = currentInput;
-                displayInput.textContent += input;
+                displayInput.textContent += " " + input + " ";
             }
             operator = input;
             currentInput = "";
@@ -93,12 +93,12 @@ function display(event) {
             if (isValidInput()) {
                 if (op1) {
                     op2 = currentInput;
-                    displayInput.textContent += input;
+                    displayInput.textContent += " " + input;
                     displayOutput.textContent = operate(op1, operator, op2);
                     op1 = operator = op2 = "";
                 } else if (!displayInput.textContent.includes("=")){
                     displayOutput.textContent = +displayInput.textContent;
-                    displayInput.textContent += input;
+                    displayInput.textContent += " " + input;
                 }
                 currentInput = "";
             }
@@ -121,7 +121,7 @@ function display(event) {
                 }
 
                 if (operator) {
-                    displayInput.textContent = op1 + operator + currentInput;
+                    displayInput.textContent = op1 + " " + operator + " " + currentInput;
                 } else {
                     displayInput.textContent = currentInput;
                 }

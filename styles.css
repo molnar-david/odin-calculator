@@ -36,7 +36,7 @@ h1 {
     word-break: break-all;
     text-align: right;
     align-items: flex-end;
-    min-height: 120px;
+    min-height: 100px;
     width: 350px;
     border: 2px solid black;
     padding: 10px 10px 0;
@@ -45,11 +45,13 @@ h1 {
 
 #display-input {
     flex: 1;
+    min-height: 30px;
     font-size: 20px;
 }
 
 #display-output {
     flex: 2;
+    min-height: 60px;
     font-size: 40px;
 }
 
