@@ -1,4 +1,8 @@
-let operand1, operator, operand2;
+const NUMBERS = "0123456789";
+const OPERATORS = "+-*/";
+
+let op1, operator, op2;
+let currentInput = "";
 let displayInput = document.getElementById("display-input");
 let displayOutput = document.getElementById("display-output");
 
@@ -23,19 +27,19 @@ function divide(x, y) {
     return x / y;
 }
 
-function operate(operand1, operator, operand2) {
+function operate(op1, operator, op2) {
     switch (operator) {
         case "+":
-            return add(+operand1, +operand2);
+            return add(+op1, +op2);
             break;
         case "-":
-            return subtract(+operand1, +operand2);
+            return subtract(+op1, +op2);
             break;
         case "*":
-            return multiply(+operand1, +operand2);
+            return multiply(+op1, +op2);
             break;
         case "/":
-            return divide(+operand1, +operand2);
+            return divide(+op1, +op2);
             break;
         default:
             return;
@@ -43,10 +47,20 @@ function operate(operand1, operator, operand2) {
 }
 
 function display(event) {
-    displayInput.textContent += event.target.textContent;
+    let input = event.target.textContent;
+    if (NUMBERS.includes(input)) {
+        currentInput += input;
+        displayInput.textContent += input;
+    } else if (OPERATORS.includes(input)) {
+        op1 = currentInput;
+        currentInput = "";
+        operator = input;
+        displayInput.textContent += input;
+    } else switch (input) {
+        case "=":
+            op2 = currentInput;
+            currentInput = "";
+            displayInput.textContent += input;
+            displayOutput.textContent = operate(op1, operator, op2)
+    }
 }
-
-// operand1 = prompt("Enter operand1:");
-// operator = prompt("Enter operator:");
-// operand2 = prompt("Enter operand2:");
-console.log(operate(operand1, operator, operand2));
