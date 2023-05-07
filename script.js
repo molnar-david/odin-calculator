@@ -1,5 +1,5 @@
 const NUMBERS = "0123456789";
-const OPERATORS = "+-*/";
+const OPERATORS = "+-x/";
 
 let op1, operator, op2;
 let currentInput = "";
@@ -35,7 +35,7 @@ function operate(op1, operator, op2) {
         case "-":
             return subtract(+op1, +op2);
             break;
-        case "*":
+        case "x":
             return multiply(+op1, +op2);
             break;
         case "/":
@@ -49,18 +49,25 @@ function operate(op1, operator, op2) {
 function display(event) {
     let input = event.target.textContent;
     if (NUMBERS.includes(input)) {
+        if (op2) {
+            op1 = operator = op2 = "";
+            displayInput.textContent = displayOutput.textContent = "";
+        }
         currentInput += input;
         displayInput.textContent += input;
-    } else if (OPERATORS.includes(input)) {
+    } else if (OPERATORS.includes(input) && currentInput) {
         op1 = currentInput;
         currentInput = "";
         operator = input;
         displayInput.textContent += input;
     } else switch (input) {
         case "=":
-            op2 = currentInput;
-            currentInput = "";
-            displayInput.textContent += input;
-            displayOutput.textContent = operate(op1, operator, op2)
+            if (op1 && operator && currentInput) {
+                op2 = currentInput;
+                currentInput = "";
+                displayInput.textContent += input;
+                displayOutput.textContent = operate(op1, operator, op2);
+            }
+            break;
     }
 }
