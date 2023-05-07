@@ -55,18 +55,30 @@ function display(event) {
         }
         currentInput += input;
         displayInput.textContent += input;
-    } else if (OPERATORS.includes(input) && currentInput) {
-        op1 = currentInput;
-        currentInput = "";
+    } else if (OPERATORS.includes(input)) {
+        if (op2) {                          // Chain with "="
+            op1 = displayOutput.textContent;
+            op2 = "";
+            displayInput.textContent = op1 + input;
+        } else if (currentInput) {          // Chain with "+-x/"
+            if (op1) { 
+                op1 = operate(op1, operator, currentInput);
+                displayOutput.textContent = op1;
+                displayInput.textContent = op1 + input;
+            } else {
+                op1 = currentInput;
+                displayInput.textContent += input;
+            }
+        }
         operator = input;
-        displayInput.textContent += input;
+        currentInput = "";
     } else switch (input) {
         case "=":
             if (op1 && operator && currentInput) {
                 op2 = currentInput;
-                currentInput = "";
                 displayInput.textContent += input;
                 displayOutput.textContent = operate(op1, operator, op2);
+                currentInput = "";
             }
             break;
     }
