@@ -114,10 +114,10 @@ function display(event) {
             } else {
                 if (!currentInput) {
                     currentInput = "-";
-                } else if (currentInput === "-") {
-                    currentInput = "";
+                } else if (currentInput.charAt(0) === "-") {
+                    currentInput = currentInput.slice(1);
                 } else {
-                    currentInput = (-currentInput).toString();
+                    currentInput = "-" + currentInput;
                 }
 
                 if (operator) {
