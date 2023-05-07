@@ -46,39 +46,97 @@ function operate(op1, operator, op2) {
     }
 }
 
+function clear() {
+    op1 = operator = op2 = "";
+    displayInput.textContent = displayOutput.textContent = "";
+    currentInput = "";
+}
+
+function isValidInput() {
+    return currentInput && currentInput !== "-" && currentInput.slice(-1) !== ".";
+}
+
 function display(event) {
     let input = event.target.textContent;
     if (NUMBERS.includes(input)) {
-        if (op2) {
-            op1 = operator = op2 = "";
-            displayInput.textContent = displayOutput.textContent = "";
+        if (displayInput.textContent.includes("=")) {
+            clear();
         }
         currentInput += input;
         displayInput.textContent += input;
     } else if (OPERATORS.includes(input)) {
-        if (op2) {                          // Chain with "="
+        // Chain with "="
+        if (displayInput.textContent.includes("=")) {
             op1 = displayOutput.textContent;
             op2 = "";
             displayInput.textContent = op1 + input;
-        } else if (currentInput) {          // Chain with "+-x/"
-            if (op1) { 
-                op1 = operate(op1, operator, currentInput);
-                displayOutput.textContent = op1;
+            operator = input;
+            currentInput = "";
+        } else if (isValidInput()) {
+            // Chain with "+-x/"
+            if (op1 && operator) { 
+                op1 = operate(op1, operator, currentInput).toString();
+                displayOutput.textContent = +op1;
                 displayInput.textContent = op1 + input;
             } else {
                 op1 = currentInput;
                 displayInput.textContent += input;
             }
+            operator = input;
+            currentInput = "";
         }
-        operator = input;
-        currentInput = "";
     } else switch (input) {
         case "=":
-            if (op1 && operator && currentInput) {
-                op2 = currentInput;
-                displayInput.textContent += input;
-                displayOutput.textContent = operate(op1, operator, op2);
+            if (isValidInput()) {
+                if (op1) {
+                    op2 = currentInput;
+                    displayInput.textContent += input;
+                    displayOutput.textContent = operate(op1, operator, op2);
+                    op1 = operator = op2 = "";
+                } else if (!displayInput.textContent.includes("=")){
+                    displayOutput.textContent = +displayInput.textContent;
+                    displayInput.textContent += input;
+                }
                 currentInput = "";
+            }
+            break;
+        case "C":
+            clear();
+            break;
+        case "+/-":
+            // "=" was pressed last
+            if (displayInput.textContent.includes("=")) {
+                displayInput.textContent = -displayOutput.textContent;
+                currentInput = displayInput.textContent;
+            } else {
+                if (!currentInput) {
+                    currentInput = "-";
+                } else if (currentInput === "-") {
+                    currentInput = "";
+                } else {
+                    currentInput = (-currentInput).toString();
+                }
+
+                if (operator) {
+                    displayInput.textContent = op1 + operator + currentInput;
+                } else {
+                    displayInput.textContent = currentInput;
+                }
+            }
+            break;
+        case ".":
+            if (!currentInput.includes(".")) {
+                if (displayInput.textContent.includes("=")) {
+                    clear();
+                }
+                currentInput += input;
+                displayInput.textContent += input;
+            }
+            break;
+        case "DEL":
+            if (currentInput) {
+                currentInput = currentInput.slice(0, -1);
+                displayInput.textContent = displayInput.textContent.slice(0, -1);
             }
             break;
     }
