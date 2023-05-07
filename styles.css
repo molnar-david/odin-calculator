@@ -33,15 +33,19 @@ h1 {
 .display-container {
     display: flex;
     flex-direction: column;
+    word-break: break-all;
+    text-align: right;
     align-items: flex-end;
-    height: 100px;
+    min-height: 120px;
+    width: 350px;
     border: 2px solid black;
     padding: 10px 10px 0;
+    gap: 10px;
 }
 
 #display-input {
     flex: 1;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 #display-output {

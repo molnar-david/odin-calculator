@@ -59,6 +59,9 @@ function isValidInput() {
 function display(event) {
     let input = event.target.textContent;
     if (NUMBERS.includes(input)) {
+        if (currentInput.length >= 12) {
+            return;
+        }
         if (displayInput.textContent.includes("=")) {
             clear();
         }
