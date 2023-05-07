@@ -1,4 +1,11 @@
 let operand1, operator, operand2;
+let displayInput = document.getElementById("display-input");
+let displayOutput = document.getElementById("display-output");
+
+let btns = document.querySelectorAll("button");
+btns.forEach((btn) => {
+    btn.addEventListener("click", display);
+});
 
 function add(x, y) {
     return x + y;
@@ -33,6 +40,10 @@ function operate(operand1, operator, operand2) {
         default:
             return;
     }
+}
+
+function display(event) {
+    displayInput.textContent += event.target.textContent;
 }
 
 // operand1 = prompt("Enter operand1:");
