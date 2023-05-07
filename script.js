@@ -35,7 +35,7 @@ function operate(operand1, operator, operand2) {
     }
 }
 
-operand1 = prompt("Enter operand1:");
-operator = prompt("Enter operator:");
-operand2 = prompt("Enter operand2:");
+// operand1 = prompt("Enter operand1:");
+// operator = prompt("Enter operator:");
+// operand2 = prompt("Enter operand2:");
 console.log(operate(operand1, operator, operand2));
