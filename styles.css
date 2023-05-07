@@ -39,12 +39,12 @@ h1 {
     padding: 10px;
 }
 
-#display-top {
+#display-input {
     flex: 1;
     font-size: 16px;
 }
 
-#display-bottom {
+#display-output {
     flex: 2;
     font-size: 40px;
 }
