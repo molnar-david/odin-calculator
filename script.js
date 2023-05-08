@@ -56,7 +56,7 @@ function clear() {
     currentInput = "";
 }
 
-function isValidInput() {
+function isValidInputForEvaluation() {
     return currentInput && currentInput !== "-" && currentInput.slice(-1) !== ".";
 }
 
@@ -103,7 +103,7 @@ function display(event) {
             displayInput.textContent = op1 + " " + input + " ";
             operator = input;
             currentInput = "";
-        } else if (isValidInput()) {
+        } else if (isValidInputForEvaluation()) {
             // Chain with "+-x/"
             if (op1 && operator) { 
                 op1 = operate(op1, operator, currentInput).toString();
@@ -118,7 +118,7 @@ function display(event) {
         }
     } else switch (input) {
         case "=":
-            if (isValidInput()) {
+            if (isValidInputForEvaluation()) {
                 if (op1) {
                     op2 = currentInput;
                     displayInput.textContent += " " + input;
