@@ -1,5 +1,7 @@
 const NUMBERS = "0123456789";
 const OPERATORS = "+-x/";
+const AUX_KEYS = "=.c";
+const ALL_KEYS = NUMBERS + OPERATORS + AUX_KEYS;
 
 let op1, operator, op2;
 let currentInput = "";
@@ -10,6 +12,8 @@ let btns = document.querySelectorAll("button");
 btns.forEach((btn) => {
     btn.addEventListener("click", display);
 });
+
+window.addEventListener("keydown", display);
 
 function add(x, y) {
     return x + y;
@@ -57,7 +61,31 @@ function isValidInput() {
 }
 
 function display(event) {
-    let input = event.target.textContent;
+    let input;
+    switch (event.type) {
+        case "keydown":
+            switch (event.key) {
+                case "Backspace":
+                    input = "del";
+                    break;
+                case "Enter":
+                    input = "=";
+                    break;
+                case "*":
+                    input = "x";
+                    break;
+                default:
+                    input = event.key.toLowerCase();
+                    break;
+            }
+            break;
+        case "click":
+            input = event.target.textContent.toLowerCase();
+            break;
+        default:
+            break;
+    }
+
     if (NUMBERS.includes(input)) {
         if (currentInput.length >= 12) {
             return;
@@ -103,7 +131,7 @@ function display(event) {
                 currentInput = "";
             }
             break;
-        case "C":
+        case "c":
             clear();
             break;
         case "+/-":
@@ -136,11 +164,13 @@ function display(event) {
                 displayInput.textContent += input;
             }
             break;
-        case "DEL":
+        case "del":
             if (currentInput) {
                 currentInput = currentInput.slice(0, -1);
                 displayInput.textContent = displayInput.textContent.slice(0, -1);
             }
+            break;
+        default:
             break;
     }
 }
